@@ -2,7 +2,7 @@ from typing import List
 import streamlit as st
 from langchain.docstore.document import Document
 from knowledge_gpt.core.parsing import File
-import openai
+# import openai
 from streamlit.logger import get_logger
 from typing import NoReturn
 
@@ -42,23 +42,23 @@ def display_file_read_error(e: Exception, file_name: str) -> NoReturn:
     st.stop()
 
 
-@st.cache_data(show_spinner=False)
-def is_open_ai_key_valid(openai_api_key, model: str) -> bool:
-    if model == "debug":
-        return True
+# @st.cache_data(show_spinner=False)
+# def is_open_ai_key_valid(openai_api_key, model: str) -> bool:
+#     if model == "debug":
+#         return True
 
-    if not openai_api_key:
-        st.error("Please enter your OpenAI API key in the sidebar!")
-        return False
-    try:
-        openai.ChatCompletion.create(
-            model=model,
-            messages=[{"role": "user", "content": "test"}],
-            api_key=openai_api_key,
-        )
-    except Exception as e:
-        st.error(f"{e.__class__.__name__}: {e}")
-        logger.error(f"{e.__class__.__name__}: {e}")
-        return False
+#     if not openai_api_key:
+#         st.error("Please enter your OpenAI API key in the sidebar!")
+#         return False
+#     try:
+#         openai.ChatCompletion.create(
+#             model=model,
+#             messages=[{"role": "user", "content": "test"}],
+#             api_key=openai_api_key,
+#         )
+#     except Exception as e:
+#         st.error(f"{e.__class__.__name__}: {e}")
+#         logger.error(f"{e.__class__.__name__}: {e}")
+#         return False
 
-    return True
+#     return True

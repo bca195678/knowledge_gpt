@@ -1,11 +1,16 @@
 from langchain.vectorstores import VectorStore
 from knowledge_gpt.core.parsing import File
-from langchain.vectorstores.faiss import FAISS
-from langchain.embeddings import OpenAIEmbeddings
+# from langchain.vectorstores.faiss import FAISS
+from langchain_community.vectorstores import FAISS
+# from langchain.embeddings import OpenAIEmbeddings
 from langchain.embeddings.base import Embeddings
 from typing import List, Type
 from langchain.docstore.document import Document
-from knowledge_gpt.core.debug import FakeVectorStore, FakeEmbeddings
+# from knowledge_gpt.core.debug import FakeVectorStore, FakeEmbeddings
+
+from langchain_community.embeddings import FakeEmbeddings
+
+from langchain_community.embeddings import OllamaEmbeddings, OpenAIEmbeddings
 
 
 class FolderIndex:
@@ -51,16 +56,18 @@ def embed_files(
     """Embeds a collection of files and stores them in a FolderIndex."""
 
     supported_embeddings: dict[str, Type[Embeddings]] = {
+        "mxbai": OllamaEmbeddings,
         "openai": OpenAIEmbeddings,
         "debug": FakeEmbeddings,
     }
     supported_vector_stores: dict[str, Type[VectorStore]] = {
         "faiss": FAISS,
-        "debug": FakeVectorStore,
+        # "debug": FakeVectorStore,
     }
 
     if embedding in supported_embeddings:
-        _embeddings = supported_embeddings[embedding](**kwargs)
+        # _embeddings = supported_embeddings[embedding](**kwargs)
+        _embeddings = supported_embeddings[embedding](model="mxbai-embed-large")
     else:
         raise NotImplementedError(f"Embedding {embedding} not supported.")
 

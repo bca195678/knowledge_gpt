@@ -2,8 +2,10 @@ from langchain.vectorstores import VectorStore
 from typing import Iterable, List, Any
 from langchain.docstore.document import Document
 from langchain.embeddings.base import Embeddings
-from langchain.embeddings.fake import FakeEmbeddings as FakeEmbeddingsBase
-from langchain.chat_models.fake import FakeListChatModel
+# from langchain.embeddings.fake import FakeEmbeddings as FakeEmbeddingsBase
+from langchain_community.embeddings import FakeEmbeddings as FakeEmbeddingsBase
+# from langchain.chat_models.fake import FakeListChatModel
+from langchain_community.chat_models.fake import FakeListChatModel
 from typing import Optional
 
 

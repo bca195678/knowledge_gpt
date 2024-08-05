@@ -2,9 +2,11 @@ from typing import List
 from langchain.chains.combine_documents.stuff import StuffDocumentsChain
 from langchain.docstore.document import Document
 
-from langchain.chat_models import ChatOpenAI
+# from langchain.chat_models import ChatOpenAI
 from knowledge_gpt.core.debug import FakeChatModel
 from langchain.chat_models.base import BaseChatModel
+
+from langchain_community.llms import Ollama
 
 
 def pop_docs_upto_limit(
@@ -27,6 +29,10 @@ def get_llm(model: str, **kwargs) -> BaseChatModel:
         return FakeChatModel()
 
     if "gpt" in model:
-        return ChatOpenAI(model=model, **kwargs)  # type: ignore
+        # return ChatOpenAI(model=model, **kwargs)  # type: ignore
+        pass
+    
+    if "llama" in model:
+        return Ollama(model=model)
 
     raise NotImplementedError(f"Model {model} not supported!")
