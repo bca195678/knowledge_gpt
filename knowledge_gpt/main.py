@@ -142,6 +142,7 @@ if submit:
     with sources_col:
         st.markdown("#### Sources")
         for source in result.sources:
-            st.markdown(source.page_content)
-            st.markdown(source.metadata["source"])
+            st.markdown(f"[SRC] *{source.metadata["fname"]}, {source.metadata["source"]}*")
+            st.markdown(f"[CONTENT] *{source.page_content}*")
+            # st.markdown(source.metadata["source"])
             st.markdown("---")

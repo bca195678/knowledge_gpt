@@ -12,6 +12,11 @@ from langchain_community.embeddings import FakeEmbeddings
 
 from langchain_community.embeddings import OllamaEmbeddings, OpenAIEmbeddings
 
+import os
+
+
+FAISS_PATH = "faiss-db-file-saved"
+
 
 class FolderIndex:
     """Index for a collection of files (a folder)"""
@@ -40,12 +45,27 @@ class FolderIndex:
     ) -> "FolderIndex":
         """Creates an index from files."""
 
-        all_docs = cls._combine_files(files)
+        # all_docs = cls._combine_files(files)
 
-        index = vector_store.from_documents(
-            documents=all_docs,
-            embedding=embeddings,
-        )
+        # index = vector_store.from_documents(
+        #     documents=all_docs,
+        #     embedding=embeddings,
+        # )
+
+        if os.path.exists(FAISS_PATH):
+            print(f"Local DB existed: Loading local ....")
+            index = FAISS.load_local(FAISS_PATH, embeddings, allow_dangerous_deserialization=True)
+
+        else:
+            print(f"Local DB not exist: Creating local ....")
+
+            all_docs = cls._combine_files(files)
+
+            index = vector_store.from_documents(
+                documents=all_docs,
+                embedding=embeddings,
+            )
+            index.save_local(FAISS_PATH)
 
         return cls(files=files, index=index)
 

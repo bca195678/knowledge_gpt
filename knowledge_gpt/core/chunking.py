@@ -23,8 +23,7 @@ def chunk_file(
 
         chunks = text_splitter.split_text(doc.page_content)
 
-        print(f"{doc.metadata.get('page', 1)=}")
-        print(f"{doc.metadata.get('filename')=}")
+        # print(f"{doc.metadata.get('page', 1)=}")
 
         for i, chunk in enumerate(chunks):
             doc = Document(
@@ -33,6 +32,7 @@ def chunk_file(
                     "page": doc.metadata.get("page", 1),
                     "chunk": i + 1,
                     "source": f"{doc.metadata.get('page', 1)}-{i + 1}",
+                    "fname": file.name,                    
                 },
             )
             chunked_docs.append(doc)

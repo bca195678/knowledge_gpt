@@ -26,6 +26,8 @@ class File(ABC):
         self.metadata = metadata or {}
         self.docs = docs or []
 
+        # print(f"{self.name=}")
+
     @classmethod
     @abstractmethod
     def from_bytes(cls, file: BytesIO) -> "File":
